@@ -81,12 +81,20 @@ def get_valid_input(prompt, validation_func):
 
 
 def ask_question(question, options):  # prints question and gathers response
-    print(question)  # prints question
+    while True:
+        print(question)  # prints question
     # assigns numbers to options, starting with 1
-    for idx, option in enumerate(options, 1):
-        print(f"{idx}. {option}")  # prints options
-    choice = input("Select an option: ")  # shows option input field to user
-    return int(choice)  # returns the selected option as the matching integer
+        for idx, option in enumerate(options, 1):
+            print(f"{idx}. {option}")  # prints options
+        # shows option input field to user
+        choice = input("Select an option: ")
+        # checks if input is a digit and within options range
+        if choice.isdigit() and 1 <= int(choice) <= len(options):
+            # returns the selected option as the matching integer
+            return int(choice)
+        else:
+            # if validation fails, prints error
+            print("Invalid input. Please enter the number for the options.")
 
 
 def main_audit():
