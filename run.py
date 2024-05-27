@@ -150,8 +150,21 @@ def main_audit():
                 log.append((sub_question, sub_options[sub_answer-1]))
 
     with open("audit_log.txt", "w") as f:  # opens audit_log.text in write
+        # iterates over all entries in the log list
         for entry in log:
-            f.write(f"{entry[0]}: {entry[1]}\n")
+            # if the entry is a dictionary entry
+            if isinstance(entry, dict):
+                # write device information
+                f.write("Device Information:\n")
+                # writes key/values for each of them in the dictionary
+                for key, value in entry.items():
+                    f.write(f"{key}: {value}\n")
+                    # blank line
+                f.write("\n")
+                # when the entry is not a dictionary
+                # write the question and the answer
+            else:
+                f.write(f"{entry[0]}: {entry[1]}\n")
 
     return log  # returns log of all questions, follow-up question and answers
 
