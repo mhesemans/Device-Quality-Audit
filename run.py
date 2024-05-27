@@ -1,6 +1,26 @@
 import datetime  # imports datatime module to get current time
 
 
+def gather_device_info():
+    auditor_name = input("Enter auditor name: ")
+    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    part_no = input("Enter part number: ")
+    so_no = input("Enter sales order number: ")
+    device_model = input("Enter device model: ")
+    serial_number = input("Enter serial number: ")
+    asset_tag = input("Enter asset tag: ")
+
+    return {
+        "Auditor Name": auditor_name,
+        "Audit Timestamp": timestamp,
+        "Part No.": part_no,
+        "SO No.": so_no,
+        "Device Model": device_model,
+        "Serial Number": serial_number,
+        "Asset Tag": asset_tag
+    }
+
+
 def ask_question(question, options):  # prints question and gathers response
     print(question)  # prints question
     # assigns numbers to options, starting with 1
@@ -13,6 +33,9 @@ def ask_question(question, options):  # prints question and gathers response
 def main_audit():
     log = []  # creates empty list to store responses to
     # questions and follow_up_questions
+
+    device_info = gather_device_info()
+    log.append(device_info)
 
     questions = [  # list of main questions
         ("Is the packaging of the laptops and desktops intact/undamaged?", [
@@ -125,8 +148,6 @@ def main_audit():
                 sub_answer = ask_question(sub_question, sub_options)
                 # logs follow-up question and answer
                 log.append((sub_question, sub_options[sub_answer-1]))
-
-    print("hello")
 
     with open("audit_log.txt", "w") as f:  # opens audit_log.text in write
         for entry in log:
