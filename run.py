@@ -114,3 +114,16 @@ def main_audit():
              ("Can the modifications be traced back to the manufacturer?",
               ["Yes", "No"])]
     }
+    # loops through questions
+    for idx, (question, options) in enumerate(questions, 1):
+        answer = ask_question(question, options)   # ask main question
+        log.append((question, options[answer-1]))  # log question and answer
+        if answer == 2:  # If answer is no, ask follow up question
+            # loops through follow_up_questions
+            for sub_question, sub_options in follow_up_questions[idx]:
+                # Asks follow-up question
+                sub_answer = ask_question(sub_question, sub_options)
+                # logs follow-up question and answer
+                log.append((sub_question, sub_options[sub_answer-1]))
+
+    return log  # returns log of all questions, follow-up question and answers
