@@ -2,15 +2,34 @@ import datetime  # imports datatime module to get current time
 
 
 def gather_device_info():
-    device_log = []
+    device_log = []  # list for device info
 
-    auditor_name = input("Enter auditor name: ")
-    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    part_no = input("Enter part number: ")
-    so_no = input("Enter sales order number: ")
-    device_model = input("Enter device model: ")
-    serial_number = input("Enter serial number: ")
-    asset_tag = input("Enter asset tag: ")
+    auditor_name = get_valid_input(  # validates and stores input in variable
+        # input for auditor name, validates if alphabetic
+        "Enter auditor name (alphabetic only): ", str.isalpha
+    )
+    # stores current date and time in day/month/year + current time
+    timestamp = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+    part_no = get_valid_input(  # validates and stores input in variable
+        # input for part number, validates if alphanumeric
+        "Enter part number (alphanumeric): ", str.isalnum
+    )
+    so_no = get_valid_input(  # validates and stores input in variable
+        # input for sales order number, validates if alphanumeric
+        "Enter sales order number (alphanumeric): ", str.isalnum
+    )
+    device_model = get_valid_input(  # validates and stores input in variable
+        # input for device model, validates if alphanumeric
+        "Enter device model (alphanumeric): ", str.isalnum
+    )
+    serial_number = get_valid_input(  # validates and stores input in variable
+        # input for serial number, validates if alphanumeric
+        "Enter serial number (alphanumeric): ", str.isalnum
+    )
+    asset_tag = get_valid_input(  # validates and stores input in variable
+        # input for asset tag, validates if alphanumeric
+        "Enter asset tag (alphanumeric): ", str.isalnum
+    )
 
     device_info = {
         "Auditor Name": auditor_name,
@@ -45,6 +64,20 @@ def gather_device_info():
             else:
                 f.write(f"{entry[0]}: {entry[1]}\n")
             f.write("\n")
+
+
+def get_valid_input(prompt, validation_func):
+    # loops until input is valid
+    while True:
+        # prompt user with input again
+        user_input = input(prompt)
+        # if input is valid
+        if validation_func(user_input):
+            return user_input  # return valid input
+        else:
+            # if input not valid, display error and prompt for info again
+            print(f"Invalid input. Please enter a value that\
+                   meets the criteria: {validation_func.__name__}")
 
 
 def ask_question(question, options):  # prints question and gathers response
