@@ -1,9 +1,20 @@
-import datetime  # gets current date and time
+import datetime  # imports datatime module to get current time
+
+
+def ask_question(question, options):  # prints question and gathers response
+    print(question)  # prints question
+    # assigns numbers to options, starting with 1
+    for idx, option in enumerate(options, 1):
+        print(f"{idx}. {option}")  # prints options
+    choice = input("Select an option: ")  # shows option input field to user
+    return int(choice)  # returns the selected option as the matching integer
+
 
 def main_audit():
-    log = []
+    log = []  # creates empty list to store responses to
+    # questions and follow_up_questions
 
-    questions = [
+    questions = [  # list of main questions
         ("Is the packaging of the laptops and desktops intact/undamaged?", [
          "Yes", "No"]),
         ("Is the device turning on and booting up without issues?", [
@@ -30,7 +41,8 @@ def main_audit():
          ["Yes", "No"])
     ]
 
-    follow_up_questions = {
+    follow_up_questions = {  # dictionary of follow up questions based on main
+        # audit responses
         1: [("Is there any visible damage to the devices themselves?",
             ["Yes", "No"]),
             ("Were the devices properly secured within the packaging?",
