@@ -2,6 +2,8 @@ import datetime  # imports datatime module to get current time
 
 
 def gather_device_info():
+    device_log = []
+
     auditor_name = input("Enter auditor name: ")
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     part_no = input("Enter part number: ")
@@ -10,7 +12,7 @@ def gather_device_info():
     serial_number = input("Enter serial number: ")
     asset_tag = input("Enter asset tag: ")
 
-    return {
+    device_info = {
         "Auditor Name": auditor_name,
         "Audit Timestamp": timestamp,
         "Part No.": part_no,
@@ -19,6 +21,30 @@ def gather_device_info():
         "Serial Number": serial_number,
         "Asset Tag": asset_tag
     }
+
+    device_log.append(device_info)  # appends device_info to device_log
+    # calls main_audit function and stores tuples in audit_log
+    audit_log = main_audit()
+    # appends audit_log to the device_log
+    device_log.extend(audit_log)
+
+    with open("audit_log.txt", "w") as f:  # opens audit_log.text in write
+        # iterates over all entries in device_log
+        for entry in device_log:
+            # if the entry is a dictionary entry
+            if isinstance(entry, dict):
+                # write device information
+                f.write("Device Information:\n")
+                # writes key/values for each of them in the dictionary
+                for key, value in entry.items():
+                    f.write(f"{key}: {value}\n")
+                    # blank line
+                f.write("\n")
+                # when the entry is not a dictionary
+                # write the question and the answer
+            else:
+                f.write(f"{entry[0]}: {entry[1]}\n")
+            f.write("\n")
 
 
 def ask_question(question, options):  # prints question and gathers response
@@ -149,25 +175,8 @@ def main_audit():
                 # logs follow-up question and answer
                 log.append((sub_question, sub_options[sub_answer-1]))
 
-    with open("audit_log.txt", "w") as f:  # opens audit_log.text in write
-        # iterates over all entries in the log list
-        for entry in log:
-            # if the entry is a dictionary entry
-            if isinstance(entry, dict):
-                # write device information
-                f.write("Device Information:\n")
-                # writes key/values for each of them in the dictionary
-                for key, value in entry.items():
-                    f.write(f"{key}: {value}\n")
-                    # blank line
-                f.write("\n")
-                # when the entry is not a dictionary
-                # write the question and the answer
-            else:
-                f.write(f"{entry[0]}: {entry[1]}\n")
-
     return log  # returns log of all questions, follow-up question and answers
 
 
 if __name__ == "__main__":
-    main_audit()
+    gather_device_info()
