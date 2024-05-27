@@ -127,3 +127,11 @@ def main_audit():
                 log.append((sub_question, sub_options[sub_answer-1]))
 
     return log  # returns log of all questions, follow-up question and answers
+
+    
+    with open("audit_log.txt", "w") as f:  # opens audit_log.text in write
+        for entry in log:
+            f.write(f"{entry[0]}: {entry[1]}\n")
+
+if __name__ == "__main__":
+    main_audit()
