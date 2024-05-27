@@ -31,7 +31,7 @@ def gather_device_info():
         "Enter asset tag (alphanumeric): ", str.isalnum
     )
 
-    device_info = {
+    device_info = {  # dictionary for device info inputs
         "Auditor Name": auditor_name,
         "Audit Timestamp": timestamp,
         "Part No.": part_no,
@@ -100,9 +100,6 @@ def ask_question(question, options):  # prints question and gathers response
 def main_audit():
     log = []  # creates empty list to store responses to
     # questions and follow_up_questions
-
-    device_info = gather_device_info()
-    log.append(device_info)
 
     questions = [  # list of main questions
         ("Is the packaging of the laptops and desktops intact/undamaged?", [
