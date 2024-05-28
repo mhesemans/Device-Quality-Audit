@@ -1,4 +1,4 @@
-import datetime  # imports datatime module to get current time
+import datetime  # imports datetime module to get current time
 import gspread
 from google.oauth2.service_account import Credentials
 
@@ -6,7 +6,7 @@ SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive.file",
     "https://www.googleapis.com/auth/drive"
-    ]
+]
 
 CREDS = Credentials.from_service_account_file('creds.json')
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
@@ -17,10 +17,16 @@ audit = SHEET.worksheet('audit')
 
 data = audit.get_all_values()
 
+"""
+Function collects device info, auditor name, time stamp (automatic, not user
+input), Part number, Sales Order number, Device model, serial number and asset
+tag and stores these variables in the device_info dictionary.
+Function then calls main_audit and stores output in audit_log, appends
+audit_log to the device_info and appends it as a row to the spreadsheet
+"""
+
 
 def gather_device_info():
-    device_log = []  # list for device info
-
     auditor_name = get_valid_input(  # validates and stores input in variable
         # input for auditor name, validates if alphabetic
         "Enter auditor name (alphabetic only): ", str.isalpha
@@ -31,100 +37,94 @@ def gather_device_info():
         # input for part number, validates if alphanumeric
         "Enter part number (alphanumeric): ", str.isalnum
     )
+    # input for sales order number, validates if alphanumeric
     so_no = get_valid_input(  # validates and stores input in variable
-        # input for sales order number, validates if alphanumeric
         "Enter sales order number (alphanumeric): ", str.isalnum
     )
+    # input for device model, validates if alphanumeric
     device_model = get_valid_input(  # validates and stores input in variable
-        # input for device model, validates if alphanumeric
         "Enter device model (alphanumeric): ", str.isalnum
     )
+    # input for serial number, validates if alphanumeric
     serial_number = get_valid_input(  # validates and stores input in variable
-        # input for serial number, validates if alphanumeric
         "Enter serial number (alphanumeric): ", str.isalnum
     )
+    # input for asset tag, validates if alphanumeric
     asset_tag = get_valid_input(  # validates and stores input in variable
-        # input for asset tag, validates if alphanumeric
         "Enter asset tag (alphanumeric): ", str.isalnum
     )
 
-    device_info = {  # dictionary for device info inputs
-        "Auditor Name": auditor_name,
-        "Audit Timestamp": timestamp,
-        "Part No.": part_no,
-        "SO No.": so_no,
-        "Device Model": device_model,
-        "Serial Number": serial_number,
-        "Asset Tag": asset_tag
-    }
+    audit_log = main_audit()  # stores main_audit output as audit_log
+    # stores device_info inputs in list
+    device_info = [auditor_name, timestamp, part_no,
+                   so_no, device_model, serial_number, asset_tag]
 
-    device_log.append(device_info)  # appends device_info to device_log
-    # calls main_audit function and stores tuples in audit_log
-    audit_log = main_audit()
-    # appends audit_log to the device_log
-    device_log.extend(audit_log)
+    row = device_info + audit_log  # adds audit_log list to device_info list
+    # appends row data to the spreadsheet
+    audit.append_row(row)
 
-    with open("audit_log.txt", "w") as f:  # opens audit_log.text in write
-        # iterates over all entries in device_log
-        for entry in device_log:
-            # if the entry is a dictionary entry
-            if isinstance(entry, dict):
-                # write device information
-                f.write("Device Information:\n")
-                # writes key/values for each of them in the dictionary
-                for key, value in entry.items():
-                    f.write(f"{key}: {value}\n")
-                    # blank line
-                f.write("\n")
-                # when the entry is not a dictionary
-                # write the question and the answer
-            else:
-                f.write(f"{entry[0]}: {entry[1]}\n")
-            f.write("\n")
+
+"""
+get_valid_input function will validate the input for the device info
+the prompt parameter is the input with the validation_func parameter the
+validation that applies to the input e.g. str.isalnum, str.isalpha. If
+validation fails, a reason will be printed for the user.
+"""
 
 
 def get_valid_input(prompt, validation_func):
-    # loops until input is valid
+    # if validation is true then prompt input will be passed through to the \
+    # user_input variable
     while True:
-        # prompt user with input again
         user_input = input(prompt)
-        # if input is valid
         if validation_func(user_input):
-            return user_input  # return valid input
+            return user_input
+        # if false, invalid input message is printed
         else:
-            # if input not valid, display error and prompt for info again
-            print(f"Invalid input. Please enter a value that\
-                   meets the criteria: {validation_func.__name__}")
+            print(
+                f"Invalid input. Please enter a value \
+                 that meets the criteria: {validation_func.__name__}")
 
 
-def ask_question(question, options):  # prints question and gathers response
+"""
+ask_question function will loop through the questions list when a valid
+answer is passed through. The options are assigned a number and the input
+is checked to make sure the number entered by the user is a digit and in range
+"""
+
+
+def ask_question(question, options):
     while True:
-        print(question)  # prints question
-    # assigns numbers to options, starting with 1
+        print(question)
         for idx, option in enumerate(options, 1):
-            print(f"{idx}. {option}")  # prints options
-        # shows option input field to user
+            print(f"{idx}. {option}")
         choice = input("Select an option: ")
-        # checks if input is a digit and within options range
         if choice.isdigit() and 1 <= int(choice) <= len(options):
-            # returns the selected option as the matching integer
             return int(choice)
         else:
-            # if validation fails, prints error
             print("Invalid input. Please enter the number for the options.")
 
 
-def main_audit():
-    log = []  # creates empty list to store responses to
-    # questions and follow_up_questions
+"""
+main_audit function stores the inputs to the questions and follow-up questions
+to the log variable as a list. It will loop through the questions list if "yes"
+(1) is provided as an input. It will loop through the follow-up questions if
+"No" (2) is provided as an input. All answers are stored as a list.
+"""
 
-    questions = [  # list of main questions
-        ("Is the packaging of the laptops and desktops intact/undamaged?", [
-         "Yes", "No"]),
-        ("Is the device turning on and booting up without issues?", [
-         "Yes", "No"]),
-        ("Is the screen of the device free from dead pixels and cracks?", [
-         "Yes", "No"]),
+
+def main_audit():
+    # Placeholder list with 48 empty strings for the 48 question columns
+    log = [''] * 48
+
+    # list of all questions with answers, stored as question and options tuples
+    questions = [
+        ("Is the packaging of the laptops and desktops intact/undamaged?",
+         ["Yes", "No"]),
+        ("Is the device turning on and booting up without issues?",
+         ["Yes", "No"]),
+        ("Is the screen of the device free from dead pixels and cracks?",
+         ["Yes", "No"]),
         ("Do all the ports (USB, HDMI, audio, etc.) function correctly?",
          ["Yes", "No"]),
         ("Are the keyboards and touchpads responsive and free from damage?",
@@ -133,36 +133,39 @@ def main_audit():
          ["Yes", "No"]),
         ("Is the pre-installed software functioning correctly and up to date?",
          ["Yes", "No"]),
-        ("Does the device meet the specified performance criteria?", [
-         "Yes", "No"]),
+        ("Does the device meet the specified performance criteria?",
+         ["Yes", "No"]),
         ("Are the devices free from overheating during operation?",
          ["Yes", "No"]),
         ("Does the device connect to Wi-Fi and Ethernet without issues?",
          ["Yes", "No"]),
-        ("Is Bluetooth and other wireless connectivity options functional?", [
-         "Yes", "No"]),
+        ("Is Bluetooth and other wireless connectivity options functional?",
+         ["Yes", "No"]),
         ("Are all devices free from unauthorized modifications or tampering?",
          ["Yes", "No"])
     ]
 
-    follow_up_questions = {  # dictionary of follow up questions based on main
-        # audit responses
+    # dictionary of follow-up questions, with lists of questions and options
+    # stored as tuples
+    follow_up_questions = {
         1: [("Is there any visible damage to the devices themselves?",
-            ["Yes", "No"]),
+             ["Yes", "No"]),
             ("Were the devices properly secured within the packaging?",
              ["Yes", "No"]),
             ("Are all the accessories present and undamaged?",
              ["Yes", "No"])],
-        2: [("Is the power supply functioning correctly?", ["Yes", "No"]),
+        2: [("Is the power supply functioning correctly?",
+             ["Yes", "No"]),
             ("Are there any error messages or beeps during the boot process?",
              ["Yes", "No"]),
-            ("Is the battery (for laptops) holding a charge?", ["Yes", "No"])],
+            ("Is the battery (for laptops) holding a charge?",
+            ["Yes", "No"])],
         3: [("How many dead pixels are there, are they clustered in one area?",
              ["Few", "Many", "Clustered"]),
             ("Is the screen damage affecting the usability of the device?",
              ["Yes", "No"]),
             ("Are there signs of previous repairs or screen replacements?",
-             ["Yes", "No"])],
+            ["Yes", "No"])],
         4: [("Which specific ports are malfunctioning?",
              ["USB", "HDMI", "Audio", "Other"]),
             ("Are the ports physically damaged or loose?",
@@ -174,7 +177,7 @@ def main_audit():
             ("Is there physical damage or wear to the touchpad?",
              ["Yes", "No"]),
             ("Are the issues consistent across multiple devices or isolated?",
-             ["Consistent", "Isolated"])],
+            ["Consistent", "Isolated"])],
         6: [("Are there any specific error messages displayed?",
              ["Yes", "No"]),
             ("Is the OS activation completed successfully?",
@@ -186,7 +189,7 @@ def main_audit():
             ("Are there any compatibility issues with the installed software?",
              ["Yes", "No"]),
             ("Are the software licenses valid and correctly assigned?",
-             ["Yes", "No"])],
+            ["Yes", "No"])],
         8: [("Are the deviations from the specifications significant?",
              ["Yes", "No"]),
             ("Is the performance issue consistent across similar models?",
@@ -198,39 +201,43 @@ def main_audit():
             ("Are there any signs of dust or blockages in the cooling system?",
              ["Yes", "No"]),
             ("Does the overheating occur under specific conditions?",
-             ["Yes, on heavy load", "No, cause undetermined"])],
+            ["Yes", "No"])],
         10: [("Are the network drivers installed and up to date?",
               ["Yes", "No"]),
              ("Is the issue present on all devices or specific ones?",
-              ["All devices", "Specific devices"]),
+             ["All devices", "Specific devices"]),
              ("Are there any interference or signal strength issues?",
-              ["Yes", "No"])],
+             ["Yes", "No"])],
         11: [("Which specific wireless features are malfunctioning?",
               ["Bluetooth", "Wi-Fi", "Other"]),
              ("Are the wireless adapters installed/recognized by the system?",
-              ["Yes", "No"]),
+             ["Yes", "No"]),
              ("Are there firmware updates available for the wireless adapter?",
-              ["Yes", "No"])],
+             ["Yes", "No"])],
         12: [("What modifications or tampering have been detected?",
               ["Software", "Hardware"]),
              ("Are there any security risks with these modifications?",
-              ["Yes", "No"]),
+             ["Yes", "No"]),
              ("Can the modifications be traced back to the manufacturer?",
-              ["Yes", "No"])]
+             ["Yes", "No"])]
     }
-    # loops through questions
+    # loops through list
     for idx, (question, options) in enumerate(questions, 1):
-        answer = ask_question(question, options)   # ask main question
-        log.append((question, options[answer-1]))  # log question and answer
-        if answer == 2:  # If answer is no, ask follow up question
-            # loops through follow_up_questions
-            for sub_question, sub_options in follow_up_questions[idx]:
-                # Asks follow-up question
-                sub_answer = ask_question(sub_question, sub_options)
-                # logs follow-up question and answer
-                log.append((sub_question, sub_options[sub_answer-1]))
+        # prints question and collects input
+        answer = ask_question(question, options)
+        # stores the input to log if answer is yes (1)
+        log[(idx - 1) * 4] = options[answer - 1]
+        # If the answer to the main question is "No"
+        if answer == 2:
+            # loop through the follow-up questions associated to main question
+            for sub_idx, (sub_q, sub_o) in\
+                 enumerate(follow_up_questions[idx], 1):
+                # Ask the follow-up question and collect input
+                sub_answer = ask_question(sub_q, sub_o)
+                # Store the input for the follow-up question in the log
+                log[(idx - 1) * 4 + sub_idx] = sub_o[sub_answer - 1]
 
-    return log  # returns log of all questions, follow-up question and answers
+    return log  # Return the log of all questions and answers
 
 
 if __name__ == "__main__":
