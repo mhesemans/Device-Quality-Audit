@@ -27,41 +27,57 @@ audit_log to the device_info and appends it as a row to the spreadsheet
 
 
 def gather_device_info():
-    auditor_name = get_valid_input(  # validates and stores input in variable
-        # input for auditor name, validates if alphabetic
-        "Enter auditor name (alphabetic only): ", str.isalpha
-    )
-    # stores current date and time in day/month/year + current time
-    timestamp = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
-    part_no = get_valid_input(  # validates and stores input in variable
-        # input for part number, validates if alphanumeric
-        "Enter part number (alphanumeric): ", str.isalnum
-    )
-    # input for sales order number, validates if alphanumeric
-    so_no = get_valid_input(  # validates and stores input in variable
-        "Enter sales order number (alphanumeric): ", str.isalnum
-    )
-    # input for device model, validates if alphanumeric
-    device_model = get_valid_input(  # validates and stores input in variable
-        "Enter device model (alphanumeric): ", str.isalnum
-    )
-    # input for serial number, validates if alphanumeric
-    serial_number = get_valid_input(  # validates and stores input in variable
-        "Enter serial number (alphanumeric): ", str.isalnum
-    )
-    # input for asset tag, validates if alphanumeric
-    asset_tag = get_valid_input(  # validates and stores input in variable
-        "Enter asset tag (alphanumeric): ", str.isalnum
-    )
+    # loop to allow multiple audits to be completed
+    while True:
+        # validates and stores input in variable
+        auditor_name = get_valid_input(
+            # input for auditor name, validates if alphabetic
+            "Enter auditor name (alphabetic only): ", str.isalpha
+        )
+        # stores current date and time in day/month/year + current time
+        timestamp = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+        part_no = get_valid_input(  # validates and stores input in variable
+            # input for part number, validates if alphanumeric
+            "Enter part number (alphanumeric): ", str.isalnum
+        )
+        # input for sales order number, validates if alphanumeric
+        so_no = get_valid_input(  # validates and stores input in variable
+            "Enter sales order number (alphanumeric): ", str.isalnum
+        )
+        # input for device model, validates if alphanumeric
+        # validates and stores input in variable
+        device_model = get_valid_input(
+            "Enter device model (alphanumeric): ", str.isalnum
+        )
+        # input for serial number, validates if alphanumeric
+        # validates and stores input in variable
+        serial_number = get_valid_input(
+            "Enter serial number (alphanumeric): ", str.isalnum
+        )
+        # input for asset tag, validates if alphanumeric
+        # validates and stores input in variable
+        asset_tag = get_valid_input(
+            "Enter asset tag (alphanumeric): ", str.isalnum
+        )
 
-    audit_log = main_audit()  # stores main_audit output as audit_log
-    # stores device_info inputs in list
-    device_info = [auditor_name, timestamp, part_no,
-                   so_no, device_model, serial_number, asset_tag]
+        audit_log = main_audit()  # stores main_audit output as audit_log
+        # stores device_info inputs in list
+        device_info = [auditor_name, timestamp, part_no,
+                       so_no, device_model, serial_number, asset_tag]
 
-    row = device_info + audit_log  # adds audit_log list to device_info list
-    # appends row data to the spreadsheet
-    audit.append_row(row)
+        # adds audit_log list to device_info list
+        row = device_info + audit_log
+        # appends row data to the spreadsheet
+        audit.append_row(row)
+
+        # Prompt the user to see if they want to complete another audit
+        another_audit = ask_question(
+            "Do you want to complete another audit?",
+            ["Yes", "No"]
+        )
+        if another_audit != 1:
+            print("Audit process completed.")
+            break  # Exit the while loop and end the function
 
 
 """
@@ -231,7 +247,7 @@ def main_audit():
         if answer == 2:
             # loop through the follow-up questions associated to main question
             for sub_idx, (sub_q, sub_o) in\
-                 enumerate(follow_up_questions[idx], 1):
+                    enumerate(follow_up_questions[idx], 1):
                 # Ask the follow-up question and collect input
                 sub_answer = ask_question(sub_q, sub_o)
                 # Store the input for the follow-up question in the log
