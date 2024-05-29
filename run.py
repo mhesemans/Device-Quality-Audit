@@ -135,7 +135,8 @@ def main_audit():
 
     # list of all questions with answers, stored as question and options tuples
     questions = [
-        ("Is the packaging of the laptops and desktops intact/undamaged?\n",
+        ("Is the packaging of the laptops and desktops \
+         intact/undamaged?\n",
          ["Yes", "No"]),
         ("Is the device turning on and booting up without issues?\n",
          ["Yes", "No"]),
@@ -147,7 +148,8 @@ def main_audit():
          ["Yes", "No"]),
         ("Is the operating system installed and functioning without errors?\n",
          ["Yes", "No"]),
-        ("Is the pre-installed software functioning correctly and up to date?\n",
+        ("Is the pre-installed software functioning correctly \
+         and up to date?\n",
          ["Yes", "No"]),
         ("Does the device meet the specified performance criteria?\n",
          ["Yes", "No"]),
@@ -157,7 +159,8 @@ def main_audit():
          ["Yes", "No"]),
         ("Is Bluetooth and other wireless connectivity options functional?\n",
          ["Yes", "No"]),
-        ("Are all devices free from unauthorized modifications or tampering?\n",
+        ("Are all devices free from unauthorized modifications \
+         or tampering?\n",
          ["Yes", "No"])
     ]
 
@@ -172,11 +175,13 @@ def main_audit():
              ["Yes", "No"])],
         2: [("Is the power supply functioning correctly?\n",
              ["Yes", "No"]),
-            ("Are there any error messages or beeps during the boot process?\n",
+            ("Are there any error messages or beeps \
+             during the boot process?\n",
              ["Yes", "No"]),
             ("Is the battery (for laptops) holding a charge?\n",
             ["Yes", "No"])],
-        3: [("How many dead pixels are there, are they clustered in one area?\n",
+        3: [("How many dead pixels are there, \
+             are they clustered in one area?\n",
              ["Few", "Many", "Clustered"]),
             ("Is the screen damage affecting the usability of the device?\n",
              ["Yes", "No"]),
@@ -192,7 +197,8 @@ def main_audit():
              ["Specific keys", "Entire keyboard", "Touchpad", "Mouse"]),
             ("Is there physical damage or wear to the touchpad?\n",
              ["Yes", "No"]),
-            ("Are the issues consistent across multiple devices or isolated?\n",
+            ("Are the issues consistent across \
+             multiple devices or isolated?\n",
             ["Consistent", "Isolated"])],
         6: [("Are there any specific error messages displayed?\n",
              ["Yes", "No"]),
@@ -202,7 +208,8 @@ def main_audit():
              ["Yes", "No"])],
         7: [("Which software applications are malfunctioning?\n",
              ["Specific apps", "All apps"]),
-            ("Are there any compatibility issues with the installed software?\n",
+            ("Are there any compatibility issues\
+              with the installed software?\n",
              ["Yes", "No"]),
             ("Are the software licenses valid and correctly assigned?\n",
             ["Yes", "No"])],
@@ -214,7 +221,8 @@ def main_audit():
              ["Yes", "No"])],
         9: [("Is the cooling system (fans, vents) functioning properly?\n",
              ["Yes", "No"]),
-            ("Are there any signs of dust or blockages in the cooling system?\n",
+            ("Are there any signs of dust or \
+             blockages in the cooling system?\n",
              ["Yes", "No"]),
             ("Does the overheating occur under specific conditions?\n",
             ["Yes", "No"])],
@@ -226,9 +234,11 @@ def main_audit():
              ["Yes", "No"])],
         11: [("Which specific wireless features are malfunctioning?\n",
               ["Bluetooth", "Wi-Fi", "Other"]),
-             ("Are the wireless adapters installed/recognized by the system?\n",
+             ("Are the wireless adapters installed/recognized \
+              by the system?\n",
              ["Yes", "No"]),
-             ("Are there firmware updates available for the wireless adapter?\n",
+             ("Are there firmware updates available \
+              for the wireless adapter?\n",
              ["Yes", "No"])],
         12: [("What modifications or tampering have been detected?\n",
               ["Software", "Hardware"]),
