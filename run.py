@@ -32,32 +32,32 @@ def gather_device_info():
         # validates and stores input in variable
         auditor_name = get_valid_input(
             # input for auditor name, validates if alphabetic
-            "Enter auditor name (alphabetic only): ", str.isalpha
+            "Enter auditor name (alphabetic only):\n", str.isalpha
         )
         # stores current date and time in day/month/year + current time
         timestamp = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
         part_no = get_valid_input(  # validates and stores input in variable
             # input for part number, validates if alphanumeric
-            "Enter part number (alphanumeric): ", str.isalnum
+            "Enter part number (alphanumeric):\n", str.isalnum
         )
         # input for sales order number, validates if alphanumeric
         so_no = get_valid_input(  # validates and stores input in variable
-            "Enter sales order number (alphanumeric): ", str.isalnum
+            "Enter sales order number (alphanumeric):\n", str.isalnum
         )
         # input for device model, validates if alphanumeric
         # validates and stores input in variable
         device_model = get_valid_input(
-            "Enter device model (alphanumeric): ", str.isalnum
+            "Enter device model (alphanumeric):\n", str.isalnum
         )
         # input for serial number, validates if alphanumeric
         # validates and stores input in variable
         serial_number = get_valid_input(
-            "Enter serial number (alphanumeric): ", str.isalnum
+            "Enter serial number (alphanumeric):\n", str.isalnum
         )
         # input for asset tag, validates if alphanumeric
         # validates and stores input in variable
         asset_tag = get_valid_input(
-            "Enter asset tag (alphanumeric): ", str.isalnum
+            "Enter asset tag (alphanumeric):\n", str.isalnum
         )
 
         audit_log = main_audit()  # stores main_audit output as audit_log
@@ -72,11 +72,11 @@ def gather_device_info():
 
         # Prompt the user to see if they want to complete another audit
         another_audit = ask_question(
-            "Do you want to complete another audit?",
+            "Do you want to complete another audit?\n",
             ["Yes", "No"]
         )
         if another_audit != 1:
-            print("Audit process completed.")
+            print("Audit process completed.\n")
             break  # Exit the while loop and end the function
 
 
@@ -99,7 +99,7 @@ def get_valid_input(prompt, validation_func):
         else:
             print(
                 f"Invalid input. Please enter a value \
-                 that meets the criteria: {validation_func.__name__}")
+                 that meets the criteria: {validation_func.__name__}\n")
 
 
 """
@@ -113,12 +113,12 @@ def ask_question(question, options):
     while True:
         print(question)
         for idx, option in enumerate(options, 1):
-            print(f"{idx}. {option}")
-        choice = input("Select an option: ")
+            print(f"{idx}. {option}\n")
+        choice = input("Select an option:\n")
         if choice.isdigit() and 1 <= int(choice) <= len(options):
             return int(choice)
         else:
-            print("Invalid input. Please enter the number for the options.")
+            print("Invalid input. Please enter the number for the options.\n")
 
 
 """
@@ -135,106 +135,106 @@ def main_audit():
 
     # list of all questions with answers, stored as question and options tuples
     questions = [
-        ("Is the packaging of the laptops and desktops intact/undamaged?",
+        ("Is the packaging of the laptops and desktops intact/undamaged?\n",
          ["Yes", "No"]),
-        ("Is the device turning on and booting up without issues?",
+        ("Is the device turning on and booting up without issues?\n",
          ["Yes", "No"]),
-        ("Is the screen of the device free from dead pixels and cracks?",
+        ("Is the screen of the device free from dead pixels and cracks?\n",
          ["Yes", "No"]),
-        ("Do all the ports (USB, HDMI, audio, etc.) function correctly?",
+        ("Do all the ports (USB, HDMI, audio, etc.) function correctly?\n",
          ["Yes", "No"]),
-        ("Are the keyboards and touchpads responsive and free from damage?",
+        ("Are the keyboards and touchpads responsive and free from damage?\n",
          ["Yes", "No"]),
-        ("Is the operating system installed and functioning without errors?",
+        ("Is the operating system installed and functioning without errors?\n",
          ["Yes", "No"]),
-        ("Is the pre-installed software functioning correctly and up to date?",
+        ("Is the pre-installed software functioning correctly and up to date?\n",
          ["Yes", "No"]),
-        ("Does the device meet the specified performance criteria?",
+        ("Does the device meet the specified performance criteria?\n",
          ["Yes", "No"]),
-        ("Are the devices free from overheating during operation?",
+        ("Are the devices free from overheating during operation?\n",
          ["Yes", "No"]),
-        ("Does the device connect to Wi-Fi and Ethernet without issues?",
+        ("Does the device connect to Wi-Fi and Ethernet without issues?\n",
          ["Yes", "No"]),
-        ("Is Bluetooth and other wireless connectivity options functional?",
+        ("Is Bluetooth and other wireless connectivity options functional?\n",
          ["Yes", "No"]),
-        ("Are all devices free from unauthorized modifications or tampering?",
+        ("Are all devices free from unauthorized modifications or tampering?\n",
          ["Yes", "No"])
     ]
 
     # dictionary of follow-up questions, with lists of questions and options
     # stored as tuples
     follow_up_questions = {
-        1: [("Is there any visible damage to the devices themselves?",
+        1: [("Is there any visible damage to the devices themselves?\n",
              ["Yes", "No"]),
-            ("Were the devices properly secured within the packaging?",
+            ("Were the devices properly secured within the packaging?\n",
              ["Yes", "No"]),
-            ("Are all the accessories present and undamaged?",
+            ("Are all the accessories present and undamaged?\n",
              ["Yes", "No"])],
-        2: [("Is the power supply functioning correctly?",
+        2: [("Is the power supply functioning correctly?\n",
              ["Yes", "No"]),
-            ("Are there any error messages or beeps during the boot process?",
+            ("Are there any error messages or beeps during the boot process?\n",
              ["Yes", "No"]),
-            ("Is the battery (for laptops) holding a charge?",
+            ("Is the battery (for laptops) holding a charge?\n",
             ["Yes", "No"])],
-        3: [("How many dead pixels are there, are they clustered in one area?",
+        3: [("How many dead pixels are there, are they clustered in one area?\n",
              ["Few", "Many", "Clustered"]),
-            ("Is the screen damage affecting the usability of the device?",
+            ("Is the screen damage affecting the usability of the device?\n",
              ["Yes", "No"]),
-            ("Are there signs of previous repairs or screen replacements?",
+            ("Are there signs of previous repairs or screen replacements?\n",
             ["Yes", "No"])],
-        4: [("Which specific ports are malfunctioning?",
+        4: [("Which specific ports are malfunctioning?\n",
              ["USB", "HDMI", "Audio", "Other"]),
-            ("Are the ports physically damaged or loose?",
+            ("Are the ports physically damaged or loose?\n",
              ["Yes", "No"]),
-            ("Have the drivers for these ports been installed correctly?",
+            ("Have the drivers for these ports been installed correctly?\n",
              ["Yes", "No"])],
-        5: [("Which keys or areas of the touchpad/mouse are unresponsive?",
+        5: [("Which keys or areas of the touchpad/mouse are unresponsive?\n",
              ["Specific keys", "Entire keyboard", "Touchpad", "Mouse"]),
-            ("Is there physical damage or wear to the touchpad?",
+            ("Is there physical damage or wear to the touchpad?\n",
              ["Yes", "No"]),
-            ("Are the issues consistent across multiple devices or isolated?",
+            ("Are the issues consistent across multiple devices or isolated?\n",
             ["Consistent", "Isolated"])],
-        6: [("Are there any specific error messages displayed?",
+        6: [("Are there any specific error messages displayed?\n",
              ["Yes", "No"]),
-            ("Is the OS activation completed successfully?",
+            ("Is the OS activation completed successfully?\n",
              ["Yes", "No"]),
-            ("Are all necessary drivers and updates installed?",
+            ("Are all necessary drivers and updates installed?\n",
              ["Yes", "No"])],
-        7: [("Which software applications are malfunctioning?",
+        7: [("Which software applications are malfunctioning?\n",
              ["Specific apps", "All apps"]),
-            ("Are there any compatibility issues with the installed software?",
+            ("Are there any compatibility issues with the installed software?\n",
              ["Yes", "No"]),
-            ("Are the software licenses valid and correctly assigned?",
+            ("Are the software licenses valid and correctly assigned?\n",
             ["Yes", "No"])],
-        8: [("Are the deviations from the specifications significant?",
+        8: [("Are the deviations from the specifications significant?\n",
              ["Yes", "No"]),
-            ("Is the performance issue consistent across similar models?",
+            ("Is the performance issue consistent across similar models?\n",
              ["Yes", "No"]),
-            ("Are there any background processes impacting performance?",
+            ("Are there any background processes impacting performance?\n",
              ["Yes", "No"])],
-        9: [("Is the cooling system (fans, vents) functioning properly?",
+        9: [("Is the cooling system (fans, vents) functioning properly?\n",
              ["Yes", "No"]),
-            ("Are there any signs of dust or blockages in the cooling system?",
+            ("Are there any signs of dust or blockages in the cooling system?\n",
              ["Yes", "No"]),
-            ("Does the overheating occur under specific conditions?",
+            ("Does the overheating occur under specific conditions?\n",
             ["Yes", "No"])],
-        10: [("Are the network drivers installed and up to date?",
+        10: [("Are the network drivers installed and up to date?\n",
               ["Yes", "No"]),
-             ("Is the issue present on all devices or specific ones?",
+             ("Is the issue present on all devices or specific ones?\n",
              ["All devices", "Specific devices"]),
-             ("Are there any interference or signal strength issues?",
+             ("Are there any interference or signal strength issues?\n",
              ["Yes", "No"])],
-        11: [("Which specific wireless features are malfunctioning?",
+        11: [("Which specific wireless features are malfunctioning?\n",
               ["Bluetooth", "Wi-Fi", "Other"]),
-             ("Are the wireless adapters installed/recognized by the system?",
+             ("Are the wireless adapters installed/recognized by the system?\n",
              ["Yes", "No"]),
-             ("Are there firmware updates available for the wireless adapter?",
+             ("Are there firmware updates available for the wireless adapter?\n",
              ["Yes", "No"])],
-        12: [("What modifications or tampering have been detected?",
+        12: [("What modifications or tampering have been detected?\n",
               ["Software", "Hardware"]),
-             ("Are there any security risks with these modifications?",
+             ("Are there any security risks with these modifications?\n",
              ["Yes", "No"]),
-             ("Can the modifications be traced back to the manufacturer?",
+             ("Can the modifications be traced back to the manufacturer?\n",
              ["Yes", "No"])]
     }
     # loops through list
@@ -257,4 +257,8 @@ def main_audit():
 
 
 if __name__ == "__main__":
+    print("Welcome to the Device Quality Audit tool./n")
+    print("Please provide the audit details, after which \
+          you will be presented with a set of questions to determine \
+          if the device meets the quality requirements.\n")
     gather_device_info()
