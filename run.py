@@ -65,10 +65,17 @@ def gather_device_info():
         device_info = [auditor_name, timestamp, part_no,
                        so_no, device_model, serial_number, asset_tag]
 
+        # display message a message to the user that the audit will be
+        # submitted
+        print("Transmitting Audit data to spreadsheet ...\n")
+
         # adds audit_log list to device_info list
         row = device_info + audit_log
         # appends row data to the spreadsheet
         audit.append_row(row)
+
+        # display message to report completion of audit
+        print("This Device Quality Audit was successfully submitted!\n")
 
         # Prompt the user to see if they want to complete another audit
         another_audit = ask_question(
