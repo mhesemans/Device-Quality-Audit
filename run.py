@@ -269,6 +269,6 @@ def main_audit():
 if __name__ == "__main__":
     print("Welcome to the Device Quality Audit tool./n")
     print("Please provide the audit details, after which \
-          you will be presented with a set of questions to determine \
-          if the device meets the quality requirements.\n")
+you will be presented with a set of questions to determine \
+if the device meets the quality requirements.\n")
     gather_device_info()
