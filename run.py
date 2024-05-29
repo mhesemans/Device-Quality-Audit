@@ -99,7 +99,7 @@ def get_valid_input(prompt, validation_func):
         else:
             print(
                 f"Invalid input. Please enter a value \
-                 that meets the criteria: {validation_func.__name__}\n")
+that meets the criteria: {validation_func.__name__}\n")
 
 
 """
@@ -136,7 +136,7 @@ def main_audit():
     # list of all questions with answers, stored as question and options tuples
     questions = [
         ("Is the packaging of the laptops and desktops \
-         intact/undamaged?\n",
+intact/undamaged?\n",
          ["Yes", "No"]),
         ("Is the device turning on and booting up without issues?\n",
          ["Yes", "No"]),
@@ -149,7 +149,7 @@ def main_audit():
         ("Is the operating system installed and functioning without errors?\n",
          ["Yes", "No"]),
         ("Is the pre-installed software functioning correctly \
-         and up to date?\n",
+and up to date?\n",
          ["Yes", "No"]),
         ("Does the device meet the specified performance criteria?\n",
          ["Yes", "No"]),
@@ -160,7 +160,7 @@ def main_audit():
         ("Is Bluetooth and other wireless connectivity options functional?\n",
          ["Yes", "No"]),
         ("Are all devices free from unauthorized modifications \
-         or tampering?\n",
+or tampering?\n",
          ["Yes", "No"])
     ]
 
@@ -176,12 +176,12 @@ def main_audit():
         2: [("Is the power supply functioning correctly?\n",
              ["Yes", "No"]),
             ("Are there any error messages or beeps \
-             during the boot process?\n",
+during the boot process?\n",
              ["Yes", "No"]),
             ("Is the battery (for laptops) holding a charge?\n",
             ["Yes", "No"])],
         3: [("How many dead pixels are there, \
-             are they clustered in one area?\n",
+are they clustered in one area?\n",
              ["Few", "Many", "Clustered"]),
             ("Is the screen damage affecting the usability of the device?\n",
              ["Yes", "No"]),
@@ -198,7 +198,7 @@ def main_audit():
             ("Is there physical damage or wear to the touchpad?\n",
              ["Yes", "No"]),
             ("Are the issues consistent across \
-             multiple devices or isolated?\n",
+multiple devices or isolated?\n",
             ["Consistent", "Isolated"])],
         6: [("Are there any specific error messages displayed?\n",
              ["Yes", "No"]),
@@ -209,7 +209,7 @@ def main_audit():
         7: [("Which software applications are malfunctioning?\n",
              ["Specific apps", "All apps"]),
             ("Are there any compatibility issues\
-              with the installed software?\n",
+with the installed software?\n",
              ["Yes", "No"]),
             ("Are the software licenses valid and correctly assigned?\n",
             ["Yes", "No"])],
@@ -222,7 +222,7 @@ def main_audit():
         9: [("Is the cooling system (fans, vents) functioning properly?\n",
              ["Yes", "No"]),
             ("Are there any signs of dust or \
-             blockages in the cooling system?\n",
+blockages in the cooling system?\n",
              ["Yes", "No"]),
             ("Does the overheating occur under specific conditions?\n",
             ["Yes", "No"])],
@@ -235,10 +235,10 @@ def main_audit():
         11: [("Which specific wireless features are malfunctioning?\n",
               ["Bluetooth", "Wi-Fi", "Other"]),
              ("Are the wireless adapters installed/recognized \
-              by the system?\n",
+by the system?\n",
              ["Yes", "No"]),
              ("Are there firmware updates available \
-              for the wireless adapter?\n",
+for the wireless adapter?\n",
              ["Yes", "No"])],
         12: [("What modifications or tampering have been detected?\n",
               ["Software", "Hardware"]),
@@ -267,7 +267,7 @@ def main_audit():
 
 
 if __name__ == "__main__":
-    print("Welcome to the Device Quality Audit tool./n")
+    print("Welcome to the Device Quality Audit tool.\n")
     print("Please provide the audit details, after which \
 you will be presented with a set of questions to determine \
 if the device meets the quality requirements.\n")
