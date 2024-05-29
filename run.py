@@ -1,5 +1,6 @@
 import datetime  # imports datetime module to get current time
 import gspread
+import os
 from google.oauth2.service_account import Credentials
 
 SCOPE = [
@@ -8,7 +9,7 @@ SCOPE = [
     "https://www.googleapis.com/auth/drive"
 ]
 
-CREDS = Credentials.from_service_account_file('creds.json')
+CREDS = Credentials.from_service_account_file(os.environ.get('CREDS'))
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('device_quality_audit')
