@@ -27,6 +27,37 @@ data = audit.get_all_values()
 
 
 """
+get_quality_outcome will prompt the user to enter a serial number into the
+console, it will then check the spreadsheet for the row that contains
+the serial number in the 6th column. Once the serial number is found, it will
+print the last value in the row (list) which is the quality outcome.
+If the serial number does not exist in the spreadsheet, it will return that
+the serial number was not found and prompt for a serial number again.
+"""
+
+
+def get_quality_outcome():
+    serial_number_input = get_valid_input(
+        "Enter the serial number to check the quality outcome \
+(alphanumeric):\n", str.isalnum)
+    # Retrieve data from the worksheet
+    data = audit.get_all_values()
+
+    # Find the row with the matching serial number
+    for row in data:
+        # serial number is in the 6th column (index 5)
+        if row[5] == serial_number_input:
+            # Quality outcome is the last value in the row
+            quality_outcome = row[-1]
+            print(Fore.LIGHTGREEN_EX +
+                  f"{serial_number_input} has {quality_outcome}\
+the device quality audit\n")
+            break
+    else:
+        print(Fore.RED + f"Serial number {serial_number_input} not found.\n")
+
+
+"""
 Function collects device info, auditor name, time stamp (automatic, not user
 input), Part number, Sales Order number, Device model, serial number and asset
 tag and stores these variables in the device_info dictionary.
