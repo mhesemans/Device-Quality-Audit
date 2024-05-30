@@ -1,32 +1,69 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# **Device Quality Audit Tool**
 
-Welcome,
+![Heroku deployed app](documentation/readme/heroku_deployed.png) 
 
-This is the Code Institute student template for deploying your third portfolio project, the Python command-line project. The last update to this file was: **March 14, 2023**
+# Overview
+The Device Quality Audit Tool is designed for production quality supervisors and their teams at IT equipment resellers. This tool collects device quality audit reports for laptops and desktops undergoing configuration, modification, and installation processes. The collected data is validated and stored in a Google spreadsheet, ensuring data integrity and facilitating report generation by management. Additionally, the tool allows users to check the quality outcome of previously submitted audit reports based on the serial number of the device.
 
-## Reminders
+You can access the tool through the following link: <a href="https://device-quality-audit-3500f8503e72.herokuapp.com/" target="_blank"> Device Quality Audit </a>
 
-- Your code must be placed in the `run.py` file
-- Your dependencies must be placed in the `requirements.txt` file
-- Do not edit any of the other files or your code may not deploy properly
+The spreadsheet where the data is written into can be access through <a href="https://docs.google.com/spreadsheets/d/142YUxspbdLPVlbAbR9dHFEMEsQg8Ie459hkIRFsqVL8/edit?usp=drive_link" target="_blank"> This google drive link </a>
 
-## Creating the Heroku app
+# Table of Contents
 
-When you create the app, you will need to add two buildpacks from the _Settings_ tab. The ordering is as follows:
 
-1. `heroku/python`
-2. `heroku/nodejs`
+# Objective
 
-You must then create a _Config Var_ called `PORT`. Set this to `8000`
+This project is intended to replace the current production practise of submitting quality audit data in an unorganized manner where data is directly entered into a spreadsheet without uniform formatting or data validation. It offers the quality team a structured way to provided clear answers through targetted questioning of the device's quality and compliance parameters. This in turn provides a clean and organized data output which can be used for analysis and reporting.
 
-If you have credentials, such as in the Love Sandwiches project, you must create another _Config Var_ called `CREDS` and paste the JSON into the value field.
+[Back to top](<#contents>)
 
-Connect your GitHub repository and deploy as normal.
+# Target Audience
 
-## Constraints
+The Device Quality Audit Tool is specifically designed for:
 
-The deployment terminal is set to 80 columns by 24 rows. That means that each line of text needs to be 80 characters or less otherwise it will be wrapped onto a second line.
+- **Production Quality Supervisors:** Overseers of the quality control process who require a reliable method to document and review device audits systematically.
+- **Quality Assurance Teams:** Team members responsible for ensuring that laptops and desktops meet the required quality standards before they are distributed.
+- **IT Equipment Resellers:** Businesses that modify, configure, and install IT equipment, needing an efficient way to manage and validate audit data.
+- **Management:** Decision-makers who utilize audit reports generated from the collected data to assess and improve quality control processes.
 
----
+[Back to top](<#contents>)
 
-Happy coding!
+# User Stories
+- As a Production Quality Supervisor:
+
+    I want to ensure that all device quality audits are completed accurately and efficiently.
+    So that I can maintain high standards and consistency in our quality control processes.
+
+- As a Quality Assurance Team Member:
+
+    I want a user-friendly tool to input audit data with validation checks.
+    So that I can reduce the likelihood of errors and streamline the audit process.
+
+- As an IT Equipment Reseller:
+
+    I want a centralized system to store and manage all audit data.
+    So that I can easily access and review audit outcomes to ensure compliance with quality standards.
+
+- As a Manager:
+
+    I want to generate comprehensive reports based on the collected audit data.
+    So that I can analyze performance and identify areas for improvement.
+
+- As a Staff Member:
+
+    I want to quickly check the quality outcome of a specific device by entering its serial number.
+    So that I can provide accurate information to stakeholders and customers promptly.
+
+[Back to top](<#contents>)
+
+# Features
+
+- **Device Quality Audit:** Collects detailed audit information, validates inputs, and stores data in a Google spreadsheet.
+- **Quality Outcome Retrieval:** Allows users to check the audit result (passed/failed) for a specific device using its serial number.
+- **User-Friendly Interface:** Guides users through the audit process and provides clear feedback on data entry.
+
+# Future features
+
+- **Duplicate Serial Numbers:** Check the spreadsheet to see if an audit was previously submitted for the same serial number, overwrite the previous serial number with the new audit data.
+- **Asset Tag for Outcome Retrieval:** Check quality outcome by searching datasheet for asset tag inputs.
