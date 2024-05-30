@@ -361,7 +361,9 @@ for the wireless adapter?\n",
 
 if __name__ == "__main__":
     print("Welcome to the Device Quality Audit tool.\n")
-    print("Please provide the audit details, after which \
-you will be presented with a set of questions to determine \
+    print("Here you can submit device quality audit reports or \
+the quality outcomes of previous audits for specific serial numbers.\n")
+    print("When starting a new audit, please provide the audit details, \
+after which you will be presented with a set of questions to determine \
 if the device meets the quality requirements.\n")
     select_mode()
