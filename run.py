@@ -27,6 +27,32 @@ data = audit.get_all_values()
 
 
 """
+Select_mode will present the user with two options,
+- to check the quality outcome for a serial number
+- to start a device quality audit
+"""
+
+
+def select_mode():
+    while True:
+        mode = ask_question(
+            "Would you like to:",
+            ["Submit a Device Quality Audit",
+             "Check Quality outcome for a Serial Number"]
+        )
+        # mode 1 starts the audit function
+        if mode == 1:
+            gather_device_info()
+        # mode 2 starts the quality outcome function
+        elif mode == 2:
+            get_quality_outcome()
+        # if input was not 1 or 2, returns error and starts select_mode() again
+        else:
+            print(Fore.RED + "Invalid option. Please select again.\n")
+        select_mode()
+
+
+"""
 get_quality_outcome will prompt the user to enter a serial number into the
 console, it will then check the spreadsheet for the row that contains
 the serial number in the 6th column. Once the serial number is found, it will
@@ -37,24 +63,31 @@ the serial number was not found and prompt for a serial number again.
 
 
 def get_quality_outcome():
+    # variable that stores serial number input if input is valid
     serial_number_input = get_valid_input(
         "Enter the serial number to check the quality outcome \
 (alphanumeric):\n", str.isalnum)
     # Retrieve data from the worksheet
     data = audit.get_all_values()
 
-    # Find the row with the matching serial number
+    # Find the row with the matching serial number in data
     for row in data:
-        # serial number is in the 6th column (index 5)
+        # checks if serial number is in the 6th column (index 5)
         if row[5] == serial_number_input:
-            # Quality outcome is the last value in the row
+            # returns the Quality outcome which is the last value in the row
             quality_outcome = row[-1]
+            # prints quality outcome on screen
             print(Fore.LIGHTGREEN_EX +
-                  f"{serial_number_input} has {quality_outcome}\
+                  f"{serial_number_input} has {quality_outcome} \
 the device quality audit\n")
             break
+    # prints error if serial number was not found and returns to mode selection
     else:
         print(Fore.RED + f"Serial number {serial_number_input} not found.\n")
+        select_mode()
+
+    # Return to select_mode after checking
+    select_mode()
 
 
 """
@@ -331,4 +364,4 @@ if __name__ == "__main__":
     print("Please provide the audit details, after which \
 you will be presented with a set of questions to determine \
 if the device meets the quality requirements.\n")
-    gather_device_info()
+    select_mode()
