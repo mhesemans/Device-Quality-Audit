@@ -1,7 +1,15 @@
 import datetime  # imports datetime module to get current time
-import gspread
-from google.oauth2.service_account import Credentials
+import gspread  # google sheets
+from google.oauth2.service_account import Credentials  # allows cloud access
+# imports colorama see https://linuxhint.com/colorama-python/ for guide
+from colorama import Fore
 
+
+"""
+API variables used to connect to google sheets stored on google drive
+Provided by Code Institute in the Love Sandwiches course material and
+adapted for use in this project
+"""
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive.file",
@@ -11,11 +19,12 @@ SCOPE = [
 CREDS = Credentials.from_service_account_file('creds.json')
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
-SHEET = GSPREAD_CLIENT.open('device_quality_audit')
-
+SHEET = GSPREAD_CLIENT.open('device_quality_audit')  # points to spreadsheet
+# variable for audit worksheet
 audit = SHEET.worksheet('audit')
-
+# variable that stores all values in the worksheet
 data = audit.get_all_values()
+
 
 """
 Function collects device info, auditor name, time stamp (automatic, not user
@@ -60,22 +69,25 @@ def gather_device_info():
             "Enter asset tag (alphanumeric):\n", str.isalnum
         )
 
-        audit_log = main_audit()  # stores main_audit output as audit_log
+        # stores main_audit output as audit_log
         # stores device_info inputs in list
+        audit_log = main_audit()
         device_info = [auditor_name, timestamp, part_no,
                        so_no, device_model, serial_number, asset_tag]
 
-        # display message a message to the user that the audit will be
-        # submitted
-        print("Transmitting Audit data to spreadsheet ...\n")
+        # display a message to the user that the audit will be submitted
+        print(Fore.LIGHTYELLOW_EX +
+              "Transmitting Audit data to spreadsheet/ ...\n")
 
         # adds audit_log list to device_info list
         row = device_info + audit_log
+
         # appends row data to the spreadsheet
         audit.append_row(row)
 
         # display message to report completion of audit
-        print("This Device Quality Audit was successfully submitted!\n")
+        print(Fore.LIGHTYELLOW_EX +
+              "This Device Quality Audit was successfully submitted!\n")
 
         # Prompt the user to see if they want to complete another audit
         another_audit = ask_question(
@@ -83,7 +95,7 @@ def gather_device_info():
             ["Yes", "No"]
         )
         if another_audit != 1:
-            print("Audit process completed.\n")
+            print(Fore.LIGHTYELLOW_EX + "\n Audit process completed.\n")
             break  # Exit the while loop and end the function
 
 
@@ -104,8 +116,8 @@ def get_valid_input(prompt, validation_func):
             return user_input
         # if false, invalid input message is printed
         else:
-            print(
-                f"Invalid input. Please enter a value \
+            print(Fore.RED +
+                  f"Invalid input. Please enter a value \
 that meets the criteria: {validation_func.__name__}\n")
 
 
@@ -118,14 +130,15 @@ is checked to make sure the number entered by the user is a digit and in range
 
 def ask_question(question, options):
     while True:
-        print(question)
+        print(f"\n {question}")
         for idx, option in enumerate(options, 1):
-            print(f"{idx}. {option}\n")
-        choice = input("Select an option:\n")
+            print(Fore.LIGHTBLUE_EX + f"{idx}. {option}")
+        choice = input(Fore.WHITE + "\n Select an option:\n")
         if choice.isdigit() and 1 <= int(choice) <= len(options):
             return int(choice)
         else:
-            print("Invalid input. Please enter the number for the options.\n")
+            print(Fore.RED +
+                  "Invalid input. Please enter the number for the options.\n")
 
 
 """
@@ -138,7 +151,7 @@ to the log variable as a list. It will loop through the questions list if "yes"
 
 def main_audit():
     # Placeholder list with 48 empty strings for the 48 question columns
-    log = [''] * 48
+    log = [""] * 48  # creates list of 48 blank placeholders for all questions
 
     # list of all questions with answers, stored as question and options tuples
     questions = [
