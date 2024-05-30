@@ -75,12 +75,21 @@ def gather_device_info():
         device_info = [auditor_name, timestamp, part_no,
                        so_no, device_model, serial_number, asset_tag]
 
+        """
+        Determine the quality outcome of an audit by checking if the audit_log
+        list contains the string "No". If No is in the list, then the variable
+        will be a list that contains the string "failed", otherwise the string
+        will be "passed. This quality outcome variable will then be appended to
+        device_info and audit_log within the variable "row"
+        """
+        quality_outcome = ["failed"] if "No" in audit_log else ["passed"]
+
         # display a message to the user that the audit will be submitted
         print(Fore.LIGHTYELLOW_EX +
               "Transmitting Audit data to spreadsheet/ ...\n")
 
-        # adds audit_log list to device_info list
-        row = device_info + audit_log
+        # adds audit_log list and quality_outcome list to device_info list
+        row = device_info + audit_log + quality_outcome
 
         # appends row data to the spreadsheet
         audit.append_row(row)
