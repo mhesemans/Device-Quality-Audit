@@ -9,8 +9,33 @@ You can access the tool through the following link: <a href="https://device-qual
 
 The spreadsheet where the data is written into can be access through <a href="https://docs.google.com/spreadsheets/d/142YUxspbdLPVlbAbR9dHFEMEsQg8Ie459hkIRFsqVL8/edit?usp=drive_link" target="_blank"> This google drive link </a>
 
-# Table of Contents
+# Contents
 
+- [Device Quality Audit Tool](#device-quality-audit-tool)
+- [Overview](#overview)
+- [Table of Contents](#table-of-contents)
+- [Objective](#objective)
+- [Target Audience](#target-audience)
+- [User Stories](#user-stories)
+- [Usage](#usage)
+   * [Submit a Device Quality Audit](#submit-a-device-quality-audit)
+   * [Retrieving Quality Outcomes](#retrieving-quality-outcomes)
+- [Features](#features)
+- [Future features](#future-features)
+- [Flowchart](#flowchart)
+- [Installation](#installation)
+   * [Clone the repository:](#clone-the-repository)
+   * [Install dependencies:](#install-dependencies)
+   * [Set up Google API credentials:](#set-up-google-api-credentials)
+   * [Configuration](#configuration)
+- [Deployment](#deployment)
+- [Technologies Used ](#technologies-used)
+- [Testing](#testing)
+   * [Validation](#validation)
+   * [Spreadsheet testing](#spreadsheet-testing)
+   * [User input testing](#user-input-testing)
+   * [Bugs](#bugs)
+- [Credits & Acknowledgements](#credits-acknowledgements)
 
 # Objective
 
@@ -57,6 +82,76 @@ The Device Quality Audit Tool is specifically designed for:
 
 [Back to top](<#contents>)
 
+# Usage
+
+Upon starting, you will be greeted with the following message:
+
+        Welcome to the Device Quality Audit tool.
+
+        Please provide the audit details, after which you will be presented with a set of questions to determine if the device meets the quality requirements.
+
+
+        Would you like to:
+        1. Submit a Device Quality Audit
+        2. Check Quality outcome for a Serial Number
+
+        Select an option:
+
+## Submit a Device Quality Audit
+
+Enter "1" to choose "Submit a Device Quality Audit".
+
+You will be prompted to enter the following information:
+
+
+        Enter auditor name (alphabetic only):
+        Enter part number (alphanumeric):
+        Enter sales order number (alphanumeric):
+        Enter device model (alphanumeric):
+        Enter serial number (alphanumeric):
+        Enter asset tag (alphanumeric):
+
+The tool will then guide you through a series of questions about the device being audited.
+
+When an invalid value is entered into the mock terminal, the validation will throw a warning and you'll be asked to provided a response again.
+
+![Input was invalid](documentation/readme/invalid_input.png)
+
+<details>
+<summary>Example question</summary>
+
+        Is the packaging of the laptops and desktops intact/undamaged?
+        1. Yes
+        2. No
+</details>
+
+The audit has 12 main questions, if these questions are answered with a "No" then you will be asked probing questions to determine the nature of the issue.
+Once all questions have been answered the Quality Audit data will be submitted and written into the spreadsheet.
+
+![End of Audit](documentation/readme/audit_end.png) 
+
+After completing an audit, you can choose to submit another audit or return to the main menu.
+
+
+## Retrieving Quality Outcomes
+
+When on the main menu, enter "2" to choose "Check Quality outcome for a Serial Number".
+You will be prompted to enter a serial number:
+
+        Enter the serial number to check the quality outcome (alphanumeric):
+
+
+The tool will retrieve and display the quality outcome (passed/failed) for the specified serial number.
+
+![Audit failed for serial number](documentation/readme/audit_failed.png) 
+
+When a serial number is entered that does not have an Audit report completed yet, the mock terminal will inform the user and return to the main menu.
+
+![Serial number not found](documentation/readme/serial_not_found.png) 
+
+
+[Back to top](<#contents>)
+
 # Features
 
 - **Device Quality Audit:** Collects detailed audit information, validates inputs, and stores data in a Google spreadsheet.
@@ -67,6 +162,13 @@ The Device Quality Audit Tool is specifically designed for:
 
 - **Duplicate Serial Numbers:** Check the spreadsheet to see if an audit was previously submitted for the same serial number, overwrite the previous serial number with the new audit data.
 - **Asset Tag for Outcome Retrieval:** Check quality outcome by searching datasheet for asset tag inputs.
+
+[Back to top](<#contents>)
+
+# Flowchart
+
+
+![Flowchart](documentation/readme/flowchart.png) 
 
 [Back to top](<#contents>)
 
@@ -155,69 +257,71 @@ Once the deployment is complete, you will be able to view your app in your brows
 
 [Back to top](<#contents>)
 
-# Usage
+# Technologies Used 
+   - HTML5 - Exists within the [Python Essentials template](https://github.com/Code-Institute-Org/python-essentials-template) provided by The Code Institute
+   - JavaScript - Exists within the [Python Essentials template](https://github.com/Code-Institute-Org/python-essentials-template)
+   - Python - Written by myself unless mentioned otherwise within the source code
+   - [Microsoft Visio](https://www.microsoft.com/en-ie/microsoft-365/visio/flowchart-software) - For generating flowchart
+   - [GitHub](https://github.com/) - used for hosting this repository
+   - [Gitpod](https://www.gitpod.io/) - Code was developed and tested within its workspace
+   - Git - Version control
+   - [Google Sheets](https://docs.google.com/spreadsheets/u/0/) - stores audit data
+   - [Google Cloud Platform](https://cloud.google.com/) - provides the APIs for connecting the data sheet
+   - [Heroku](https://heroku.com/apps) - Project was deployed here
+   - [PEP8 Validator](https://pep8ci.herokuapp.com/#) - used for the Python code validation
 
-Upon starting, you will be greeted with the following message:
+   
+[Back to top](<#contents>)
 
-        Welcome to the Device Quality Audit tool.
+# Testing
 
-        Please provide the audit details, after which you will be presented with a set of questions to determine if the device meets the quality requirements.
+## Validation
 
+Code Institute's Pep8 Linter was used to validate code throughout development.
+Final sourcecode has no errors.
 
-        Would you like to:
-        1. Submit a Device Quality Audit
-        2. Check Quality outcome for a Serial Number
+![Python validation](documentation/readme/ci_python_linter.png) 
 
-        Select an option:
+## Spreadsheet testing
 
-## Submit a Device Quality Audit
+<a href="https://docs.google.com/spreadsheets/d/142YUxspbdLPVlbAbR9dHFEMEsQg8Ie459hkIRFsqVL8/edit?usp=drive_link" target="_blank"> The spreadsheet</a> was tested throughout the development to verify that data was being passed through correctly.
 
-Enter "1" to choose "Submit a Device Quality Audit".
+The spreadsheet is currently recording all audit data as expected and is able to return the validation outcomes for unique serial number values.
 
-You will be prompted to enter the following information:
+Public sharing was enabled to anyone that has access to the link (as provided within this readme file) once the development completed.
 
+## User input testing
 
-        Enter auditor name (alphabetic only):
-        Enter part number (alphanumeric):
-        Enter sales order number (alphanumeric):
-        Enter device model (alphanumeric):
-        Enter serial number (alphanumeric):
-        Enter asset tag (alphanumeric):
+All user inputs were validated and return an appropriate message. Each workflow route was tested to ensure the user never encounters a dead-end.
 
-The tool will then guide you through a series of questions about the device being audited.
+| Input Type                    | Tested   | Validation message          |
+|-------------------------------|----------|-----------------------------|
+| Mode Selection                | Yes      | Invalid option. Please select again.|
+| Device Info Inputs            | Yes      | Invalid input. Please enter a value that meets the criteria: isalnum |
+| Question Options selections   | Yes      | Invalid input. Please enter the number for the options. |
+| Quality Outcome lookup        | Yes      | Serial number ABC not found.|
 
-When an invalid value is entered into the mock terminal, the validation will throw a warning and you'll be asked to provided a response again.
+## Bugs
 
-![Input was invalid](documentation/readme/invalid_input.png)
+No real bugs were encountered within the sourcecode, however I did encounter an issue which eventually was identified to have been caused by the spreadsheet, or rather my lack of understanding of the method used to interact with the spreadsheet.
 
-<details>
-<summary>Example question</summary>
+New audit data was not being appended to the first column in the spreadsheet from row 2 on.
+This was due to my lacking understanding of the below method:
 
-        Is the packaging of the laptops and desktops intact/undamaged?
-        1. Yes
-        2. No
-</details>
+        audit.append_row(row)
 
-The audit has 12 main questions, if these questions are answered with a "No" then you will be asked probing questions to determine the nature of the issue.
-Once all questions have been answered the Quality Audit data will be submitted and written into the spreadsheet.
+For reference this method is explained in https://docs.gspread.org/en/v5.1.0/api.html
+As I had not yet provided headers for all required columns in the spreadsheet, the spreadsheet widened upon every data submission.
+Once all columns were provided with an appropriate header, the data aligned as expected.
 
-![End of Audit](documentation/readme/audit_end.png) 
+[Back to top](<#contents>)
 
-After completing an audit, you can choose to submit another audit or return to the main menu.
+# Credits & Acknowledgements
 
-
-## Retrieving Quality Outcomes
-
-When on the main menu, enter "2" to choose "Check Quality outcome for a Serial Number".
-You will be prompted to enter a serial number:
-
-        Enter the serial number to check the quality outcome (alphanumeric):
-
-
-The tool will retrieve and display the quality outcome (passed/failed) for the specified serial number.
-
-![Audit failed for serial number](documentation/readme/audit_failed.png) 
-
-When a serial number is entered that does not have an Audit report completed yet, the mock terminal will inform the user and return to the main menu.
-
-![Serial number not found](documentation/readme/serial_not_found.png) 
+- The Code Institutes LoveSandwiches course content for the Google Sheets API and CREDS configuration
+- https://docs.gspread.org/ for its examples of usage which was used to interact with the spreadsheet
+- Amy Richardson for her advice to use Colorama
+- https://pypi.org/project/colorama/ for its documentation, it really helped to bring color to the project
+- https://docs.python.org/3/library/datetime.html which was used to record the timestamp for the audits
+- https://www.javatpoint.com/ for its documentation which helped me figure out the enumerate functions and make good use of while loops
+- Rory Patrick Sheridan, my mentor throughout this project, for his advice on functionality and his assistance in troubleshooting

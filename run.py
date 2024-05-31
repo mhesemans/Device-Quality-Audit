@@ -93,7 +93,7 @@ the device quality audit\n")
 """
 Function collects device info, auditor name, time stamp (automatic, not user
 input), Part number, Sales Order number, Device model, serial number and asset
-tag and stores these variables in the device_info dictionary.
+tag and stores these variables in the device_info list.
 Function then calls main_audit and stores output in audit_log, appends
 audit_log to the device_info and appends it as a row to the spreadsheet
 """
